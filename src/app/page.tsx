@@ -4,22 +4,16 @@ import Image from "next/image";
 /**
  * Executive + Colorful single-file personal website (Next.js App Router + Tailwind).
  * Save as: src/app/page.tsx
- *
  * Put your PDFs + photo in: /public
  *   - /public/bala-profile.jpg
  *   - /public/Balachandar Nedumaran-Industry-Scientist-Resume.pdf
  *   - /public/Balachandar-Nedumaran-Academia-CV.pdf
- *
- * Quick tests in browser:
- *   http://localhost:3000/bala-profile.jpg
- *   http://localhost:3000/Balachandar%20Nedumaran-Industry-Scientist-Resume.pdf
- *   http://localhost:3000/Balachandar-Nedumaran-Academia-CV.pdf
  */
 
 const profile = {
   name: "Balachandar (Bala) Nedumaran, Ph.D.",
   title: "Senior Scientist | Cell & Molecular Biology | Analytical & Molecular Assays",
-  location: "Aurora, CO",
+  location: "Greater Denver Metro Area",
   email: "piousbala@gmail.com",
   phone: "(720) 620-7554",
 
@@ -67,14 +61,6 @@ const highlights: { label: string; items: string[] }[] = [
     ],
   },
 ];
-
-const languages: { level: string; items: string[] }[] = [
-  { level: "Proficient", items: ["English", "Tamil"] },
-  { level: "Intermediate", items: ["Hindi", "Korean"] },
-  { level: "Basic", items: ["Bengali", "Malayalam", "Kannada", "Badaga"] },
-];
-
-const activitiesBullets: string[] = ["Table Tennis", "Pickleball", "Volleyball", "Javelin Throw", "Hiking", "Skiing", "Cooking"];
 
 const experience: Experience[] = [
   {
@@ -147,11 +133,20 @@ const skillGroups: { group: string; skills: string[] }[] = [
   },
   {
     group: "Cell Biology",
-    skills: ["Mammalian cell culture (cell lines, primary cells)", "3D organoid culture", "Viral vectors (AAV, lentivirus, adenovirus): prep, transduction, titration"],
+    skills: [
+      "Mammalian cell culture (cell lines, primary cells)",
+      "3D organoid culture",
+      "Viral vectors (AAV, lentivirus, adenovirus): prep, transduction, titration",
+    ],
   },
   {
     group: "GxP / Quality Systems",
-    skills: ["GMP/GxP execution mindset", "SOP writing and controlled documentation", "Assay transfer, qualification, verification, validation support", "Troubleshooting and structured investigations"],
+    skills: [
+      "GMP/GxP execution mindset",
+      "SOP writing and controlled documentation",
+      "Assay transfer, qualification, verification, validation support",
+      "Troubleshooting and structured investigations",
+    ],
   },
 ];
 
@@ -168,14 +163,34 @@ function Pill({
     amber: "bg-amber-500/15 text-amber-50 ring-amber-400/25",
     emerald: "bg-emerald-500/15 text-emerald-50 ring-emerald-400/25",
   };
-  return <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ring-1 ${toneMap[tone]} backdrop-blur`}>{children}</span>;
+  return (
+    <span
+      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ring-1 ${toneMap[tone]} backdrop-blur`}
+    >
+      {children}
+    </span>
+  );
 }
 
 function Chip({ children }: { children: React.ReactNode }) {
-  return <span className="inline-flex items-center rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">{children}</span>;
+  return (
+    <span className="inline-flex items-center rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
+      {children}
+    </span>
+  );
 }
 
-function Section({ id, title, subtitle, children }: { id: string; title: string; subtitle?: string; children: React.ReactNode }) {
+function Section({
+  id,
+  title,
+  subtitle,
+  children,
+}: {
+  id: string;
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+}) {
   return (
     <section id={id} className="scroll-mt-28">
       <div className="mb-6">
@@ -195,7 +210,13 @@ function NavLink({ href, label }: { href: string; label: string }) {
   );
 }
 
-function GradientCard({ children, glow = "indigo" }: { children: React.ReactNode; glow?: "indigo" | "fuchsia" | "amber" | "emerald" }) {
+function GradientCard({
+  children,
+  glow = "indigo",
+}: {
+  children: React.ReactNode;
+  glow?: "indigo" | "fuchsia" | "amber" | "emerald";
+}) {
   const glowMap: Record<string, string> = {
     indigo: "from-indigo-600 via-sky-500 to-fuchsia-600",
     fuchsia: "from-fuchsia-600 via-violet-600 to-indigo-600",
@@ -215,67 +236,83 @@ export default function Page() {
     <div className="min-h-screen bg-[radial-gradient(1200px_circle_at_20%_-10%,rgba(99,102,241,0.20),transparent_60%),radial-gradient(900px_circle_at_90%_10%,rgba(217,70,239,0.18),transparent_55%),radial-gradient(900px_circle_at_50%_110%,rgba(245,158,11,0.16),transparent_55%)] bg-slate-50 text-slate-900">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/70 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-          <div className="flex items-center gap-3">
-            <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-indigo-600 via-fuchsia-600 to-amber-500 shadow-sm" aria-hidden="true" />
-            <div>
-              <div className="text-sm font-extrabold leading-tight text-slate-900">{profile.name}</div>
-              <div className="text-xs font-medium leading-tight text-slate-600">{profile.title}</div>
-            </div>
-          </div>
+  <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3 sm:px-6">
+    {/* Left: simple brand mark only (no long name/title) */}
+    <a href="#top" className="flex items-center gap-3 shrink-0">
+      <div
+        className="h-10 w-10 rounded-2xl bg-gradient-to-br from-indigo-600 via-fuchsia-600 to-amber-500 shadow-sm"
+        aria-hidden="true"
+      />
+      <div className="hidden sm:block">
+        <div className="text-sm font-extrabold leading-tight text-slate-900">Bala</div>
+        <div className="text-xs font-medium leading-tight text-slate-600">Senior Scientist</div>
+      </div>
+    </a>
 
-          <nav className="hidden items-center gap-5 md:flex">
-            <NavLink href="#about" label="About" />
-            <NavLink href="#experience" label="Experience" />
-            <NavLink href="#skills" label="Skills" />
-            <NavLink href="#languages" label="Languages" />
-            <NavLink href="#publications" label="Scholarship" />
-            <NavLink href="#activities" label="Activities" />
-            <NavLink href="#contact" label="Contact" />
-          </nav>
+    {/* Middle: scrollable tabs */}
+    <nav className="flex-1 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none]">
+      <div className="flex items-center gap-4 pr-2 [&::-webkit-scrollbar]:hidden">
+        <NavLink href="#about" label="About" />
+        <NavLink href="#experience" label="Experience" />
+        <NavLink href="#education" label="Education" />
+        <NavLink href="#expertise" label="Expertise" />
+        <NavLink href="#leadership" label="Leadership" />
+        <NavLink href="#awards" label="Awards" />
+        <NavLink href="#profiles" label="Profiles" />
+        <NavLink href="#activities" label="Activities" />
+        <NavLink href="#contact" label="Contact" />
+      </div>
+    </nav>
 
-          <div className="flex items-center gap-2">
-            <a
-              href={profile.resumePdf}
-              download
-              className="hidden sm:inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-indigo-600 via-fuchsia-600 to-amber-500 px-4 py-2 text-sm font-extrabold text-white shadow-sm hover:opacity-95"
-            >
-              Resume
-            </a>
-            <a
-              href={profile.cvPdf}
-              download
-              className="hidden sm:inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-extrabold text-slate-800 shadow-sm hover:bg-slate-50"
-            >
-              CV
-            </a>
-            <a
-              href={profile.linkedinHref}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-extrabold text-slate-800 shadow-sm hover:bg-slate-50"
-            >
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </header>
-
+    {/* Right: actions */}
+    <div className="flex items-center gap-2 shrink-0">
+      <a
+        href={profile.resumePdf}
+        download
+        className="hidden sm:inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-indigo-600 via-fuchsia-600 to-amber-500 px-4 py-2 text-sm font-extrabold text-white shadow-sm hover:opacity-95"
+      >
+        Resume
+      </a>
+      <a
+        href={profile.cvPdf}
+        download
+        className="hidden sm:inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-extrabold text-slate-800 shadow-sm hover:bg-slate-50"
+      >
+        CV
+      </a>
+      <a
+        href={profile.linkedinHref}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-extrabold text-slate-800 shadow-sm hover:bg-slate-50"
+      >
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</header>
       {/* Main */}
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         {/* Hero */}
         <div className="rounded-3xl bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 p-8 text-white shadow-[0_30px_80px_-40px_rgba(2,6,23,0.8)]">
           <div className="flex flex-wrap items-center gap-2">
-            <Pill tone="indigo">{profile.location}</Pill>
-            <Pill tone="fuchsia">GxP / GMP-ready analytics</Pill>
-            <Pill tone="amber">ddPCR · qPCR · ELISA · NGS</Pill>
-            <Pill tone="emerald">Organoids · Translational biology</Pill>
-          </div>
-
+  <Pill tone="indigo">Cell & Molecular Biology</Pill>
+  <Pill tone="fuchsia">Virology · Gene & Cell Therapy Support</Pill>
+  <Pill tone="amber">Cell- & Molecular-Based Assays</Pill>
+  <Pill tone="emerald">ddPCR · qPCR · ELISA · Sequencing</Pill>
+  <Pill tone="indigo">Organoids · Translational Biology</Pill>
+  <Pill tone="fuchsia">GxP / GMP-Ready Analytics</Pill>
+</div>
           {/* Photo + Name block */}
           <div className="mt-7 flex flex-col gap-6 sm:flex-row sm:items-center">
-            <div className="relative h-32 w-32 overflow-hidden rounded-2xl ring-4 ring-white/15 shadow-sm sm:h-36 sm:w-36">
-              <Image src={profile.photo} alt="Balachandar Nedumaran profile photo" fill className="object-cover object-top" priority />
+            <div className="relative h-28 w-28 overflow-hidden rounded-2xl ring-4 ring-white/15 shadow-sm">
+              <Image
+                src={profile.photo}
+                alt="Balachandar Nedumaran profile photo"
+                fill
+               className="object-cover object-top"
+                priority
+              />
             </div>
 
             <div>
@@ -388,7 +425,6 @@ export default function Page() {
                         {profile.email}
                       </a>
                     </div>
-                    <div>{profile.phone}</div>
                   </div>
 
                   <div className="mt-5 grid gap-2">
@@ -453,52 +489,339 @@ export default function Page() {
             </div>
           </Section>
         </div>
+{/* Education */}
+<div className="mt-14">
+  <Section
+    id="education"
+    title="Education"
+    subtitle="Academic training spanning molecular endocrinology, human genetics, and biotechnology."
+  >
+    <div className="space-y-6">
 
-        {/* Skills */}
-        <div className="mt-14">
-          <Section id="skills" title="Skills" subtitle="Grouped capabilities aligned to analytical sciences, translational assay development, and GxP execution.">
-            <div className="grid gap-6 md:grid-cols-2">
-              {skillGroups.map((sg, idx) => (
-                <GradientCard key={sg.group} glow={idx % 2 === 0 ? "amber" : "fuchsia"}>
-                  <div className="text-sm font-extrabold text-slate-900">{sg.group}</div>
-                  <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
-                    {sg.skills.map((s) => (
-                      <li key={s} className="flex gap-2">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
-                        <span>{s}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </GradientCard>
-              ))}
-            </div>
-          </Section>
+      <GradientCard glow="indigo">
+        <div className="text-lg font-extrabold text-slate-900">Chonnam National University (South Korea)</div>
+        <div className="text-sm font-semibold text-slate-700">Ph.D. in Molecular Endocrinology | 2005 – 2009</div>
+        <div className="mt-2 text-sm text-slate-600">
+          GPA: <span className="font-semibold">4.13 / 4.5</span> (South Korean system) · US-equivalent ~3.67 / 4.0
         </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          <li>Regulation of gene expression by orphan nuclear receptors in metabolism, diabetes, and obesity.</li>
+          <li>Pathways studied: gluconeogenesis, lipogenesis, adipogenesis.</li>
+          <li>Luciferase reporter assays; extensive molecular cloning (native, point mutants, serial deletions).</li>
+          <li>Protein–protein interaction assays: GST pull-down, MBP pull-down, yeast two-hybrid, Co-IP.</li>
+          <li>Novel interactor discovery using yeast two-hybrid screening with human cDNA libraries.</li>
+        </ul>
+      </GradientCard>
 
-        {/* Languages */}
-        <div className="mt-14">
-          <Section id="languages" title="Languages" subtitle="Communication strengths across multiple languages and proficiency levels.">
-            <div className="grid gap-6 md:grid-cols-3">
-              {languages.map((l, idx) => (
-                <GradientCard key={l.level} glow={idx === 0 ? "indigo" : idx === 1 ? "emerald" : "amber"}>
-                  <div className="text-sm font-extrabold text-slate-900">{l.level}</div>
-                  <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
-                    {l.items.map((x) => (
-                      <li key={x} className="flex gap-2">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
-                        <span>{x}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </GradientCard>
-              ))}
-            </div>
-          </Section>
+      <GradientCard glow="emerald">
+        <div className="text-lg font-extrabold text-slate-900">Bharathiar University (India)</div>
+        <div className="text-sm font-semibold text-slate-700">M.Phil. in Human Genetics | 2000 – 2002</div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          <li>Cytogenetic analysis of patients with Rheumatoid Arthritis.</li>
+          <li>Chromosomal analysis and case-study–based research.</li>
+        </ul>
+      </GradientCard>
+
+      <GradientCard glow="amber">
+        <div className="text-lg font-extrabold text-slate-900">Bharathidasan University (India)</div>
+        <div className="text-sm font-semibold text-slate-700">M.Sc. in Biotechnology | 1998 – 2000</div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          <li>Focus areas: Genetics, Cell Biology, Microbiology.</li>
+          <li>Cytogenetic analysis using human blood samples.</li>
+        </ul>
+      </GradientCard>
+
+      <GradientCard glow="fuchsia">
+        <div className="text-lg font-extrabold text-slate-900">Bharathiar University (India)</div>
+        <div className="text-sm font-semibold text-slate-700">B.Sc. in Genetics, Botany, Chemistry & Zoology | 1995 – 1998</div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          <li>National Cadet Corps (NCC): Senior Under Officer, C-Certificate (A-grade).</li>
+          <li>Athletic achievements in javelin throw and team sports including cricket and volleyball.</li>
+        </ul>
+      </GradientCard>
+
+    </div>
+  </Section>
+</div>
+        {/* Technical Expertise (Premium Cards) */}
+<div className="mt-14">
+  <Section
+    id="expertise"
+    title="Technical Expertise"
+    subtitle="Integrated expertise spanning molecular and cell biology, in vitro and in vivo
+  modeling, virology, gene and cell therapy–supporting assays, nuclear receptor
+  signaling, and translational assay development applied to metabolic, renal,
+  hepatic, pancreatic, cardiovascular, urologic, and nutrition-linked disease
+  biology."
+  >
+    {/* 1–7: Technical */}
+    <div className="grid gap-6 md:grid-cols-2">
+      <GradientCard glow="amber">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-extrabold text-slate-900">1) Molecular & Genomic Assays</div>
+          <Chip>Industry priority</Chip>
         </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          {[
+            "ddPCR (identity, purity, residual assays; AAV/LV)",
+            "qPCR / RT-qPCR (TaqMan & SYBR)",
+            "Custom TaqMan Array Plates & Cards",
+            "RNA extraction (cells, tissues, clinical samples)",
+            "RNA-seq / mRNA-seq (Illumina NextSeq; PacBio exposure)",
+            "Nanostring nCounter (design & execution)",
+            "SNP assays; DNA methylation studies",
+            "ChIP (in vivo), EMSA, promoter studies",
+          ].map((x) => (
+            <li key={x} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
+              <span>{x}</span>
+            </li>
+          ))}
+        </ul>
+      </GradientCard>
 
+      <GradientCard glow="fuchsia">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-extrabold text-slate-900">2) Protein, Immunoassay & Proteomics</div>
+          <Chip>Translational</Chip>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          {[
+            "ELISA (singleplex, multiplex, sandwich)",
+            "Western blotting",
+            "Co-immunoprecipitation (in vivo & in vitro)",
+            "GST / MBP pull-down assays",
+            "Tandem Affinity Purification (TAP)",
+            "Sample prep for LC-MS/MS",
+            "LC-MS/MS data interpretation",
+          ].map((x) => (
+            <li key={x} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
+              <span>{x}</span>
+            </li>
+          ))}
+        </ul>
+      </GradientCard>
+
+      <GradientCard glow="emerald">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-extrabold text-slate-900">3) Cell Biology & Advanced Culture Systems</div>
+          <Chip>Differentiator</Chip>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          {[
+            "Mammalian cell culture (≥20 cell types across 15+ years)",
+            "Primary hepatocytes (rat, mouse, human)",
+            "Human/pig aortic valve interstitial cells",
+            "Viral transduction (AAV, lentivirus, adenovirus)",
+            "Stable cell line generation",
+            "Live-cell imaging & confocal microscopy",
+            "FACS / flow cytometry",
+            "3D organoid systems: liver organoids; pancreatic beta-like clusters (ESC/iPSC-derived); bioreactor-based 3D cultures",
+          ].map((x) => (
+            <li key={x} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
+              <span>{x}</span>
+            </li>
+          ))}
+        </ul>
+      </GradientCard>
+
+      <GradientCard glow="indigo">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-extrabold text-slate-900">4) In Vivo & Animal Models</div>
+          <Chip>High value</Chip>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          {[
+            "KO / KI mouse generation & breeding strategies",
+            "Genotyping",
+            "Glucose, insulin, pyruvate tolerance tests",
+            "Mouse imaging & histology",
+            "Neurogenic bladder disease models",
+            "IACUC protocol experience",
+          ].map((x) => (
+            <li key={x} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
+              <span>{x}</span>
+            </li>
+          ))}
+        </ul>
+      </GradientCard>
+
+      <GradientCard glow="amber">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-extrabold text-slate-900">5) Cell- & Tissue-Based Functional Assays</div>
+          <Chip>Functional</Chip>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          {[
+            "Reporter gene assays (luciferase)",
+            "Proliferation & cytotoxicity assays",
+            "Calcium & collagen staining",
+            "Fibrosis-related assays",
+            "Co-culture systems (immune–epithelial)",
+          ].map((x) => (
+            <li key={x} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
+              <span>{x}</span>
+            </li>
+          ))}
+        </ul>
+      </GradientCard>
+
+      <GradientCard glow="emerald">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-extrabold text-slate-900">6) GxP, Quality & Industrial Systems</div>
+          <Chip>Compliance</Chip>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          {[
+            "cGMP / cGLP / cGDP environments",
+            "SOP authoring & controlled documentation",
+            "Assay transfer, qualification, verification, validation support",
+            "Deviation investigations (DCARs, CAPAs)",
+            "Cross-site assay execution",
+            "Tools: MasterControl, TrackWise, ComplianceWire, DocuSign, Smartsheet, Benchling ELN, Quartzy",
+          ].map((x) => (
+            <li key={x} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
+              <span>{x}</span>
+            </li>
+          ))}
+        </ul>
+      </GradientCard>
+
+      <GradientCard glow="fuchsia">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-extrabold text-slate-900">7) Data Analysis, Software & Basic Coding</div>
+          <Chip>Modern workflow</Chip>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          {[
+            "GraphPad Prism; JMP",
+            "ImageJ / ImageLab",
+            "Basic coding & automation: TypeScript/React/Next.js (personal project website)",
+            "GenAI-assisted development (ChatGPT) for rapid learning and implementation",
+            "Version control & deployment: GitHub + Vercel (CI/CD-style workflow)",
+          ].map((x) => (
+            <li key={x} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
+              <span>{x}</span>
+            </li>
+          ))}
+        </ul>
+      </GradientCard>
+    </div>
+  </Section>
+</div>
+
+{/* Leadership */}
+<div className="mt-14">
+  <Section
+    id="leadership"
+    title="Leadership, Mentoring & Teaching"
+    subtitle="Scientific leadership through mentoring, instruction, collaborative guidance, and recruiting."
+  >
+    <div className="grid gap-6 md:grid-cols-2">
+      <GradientCard glow="indigo">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-extrabold text-slate-900">Teaching & Tutoring</div>
+          <Chip>Volunteer & Academic</Chip>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          {[
+            "Orientation classes for graduate students (2015–2018)",
+            "Tutor: “Experiments in Molecular Biology,” UCD AMC (2015)",
+            "Tutor: Core I “Foundations in Biomedical Sciences,” UCD AMC (2016)",
+            "Guest lecture: Transcription & Gene Regulation (BioE 3050), UCD AMC",
+            "Genetics and Cell Biology courses for M.S. students in India (2000–2003)",
+            "Instructor role offered: BIOL 4125/5125 Molecular Biology Lab (Spring 2017, UCD Downtown; declined)",
+          ].map((x) => (
+            <li key={x} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
+              <span>{x}</span>
+            </li>
+          ))}
+        </ul>
+      </GradientCard>
+
+      <GradientCard glow="emerald">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-extrabold text-slate-900">Mentoring, Instructing & Recruiting</div>
+          <Chip>Team impact</Chip>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          {[
+            "Trained multiple lab fellows and junior researchers from Ph.D. through industry roles",
+            "Formal undergraduate mentoring program (University of Colorado Denver)",
+            "Technical guidance to grad students, postdocs, and research residents",
+            "Scientific editing of manuscripts/abstracts; support for PI grant writing and peer-review activities (~140 reviews as assistant)",
+            "Led recruitment for professional research assistants and summer interns",
+          ].map((x) => (
+            <li key={x} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
+              <span>{x}</span>
+            </li>
+          ))}
+        </ul>
+      </GradientCard>
+    </div>
+  </Section>
+</div>
+
+{/* Awards & Certifications */}
+<div className="mt-14">
+  <Section
+    id="awards"
+    title="Awards, Certifications & Honors"
+    subtitle="Academic recognition and professional development."
+  >
+    <div className="grid gap-6 md:grid-cols-2">
+      <GradientCard glow="amber">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-extrabold text-slate-900">Awards & Honors</div>
+          <Chip>Recognition</Chip>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          {[
+            "National Research Laboratory Scholarship: Full scholarship including tuition and boarding",
+          ].map((x) => (
+            <li key={x} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
+              <span>{x}</span>
+            </li>
+          ))}
+        </ul>
+      </GradientCard>
+
+      <GradientCard glow="fuchsia">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-extrabold text-slate-900">Certifications</div>
+          <Chip>Professional growth</Chip>
+        </div>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-slate-700">
+          {[
+            "Project Management Course: Certificate course offered by UCD–AMC",
+            "Speaking & Presenting Course: Certificate course offered by UCD–AMC",
+          ].map((x) => (
+            <li key={x} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
+              <span>{x}</span>
+            </li>
+          ))}
+        </ul>
+      </GradientCard>
+    </div>
+  </Section>
+</div>
         {/* Scholarship */}
         <div className="mt-14">
-          <Section id="publications" title="Scholarship" subtitle="Publication profiles and author search across major indexing platforms.">
+          <Section
+  id="public-profiles"
+  title="Public Profiles"
+  subtitle="Find my research and professional profiles across major platforms."
+>
             <GradientCard glow="emerald">
               <div className="flex flex-wrap gap-3">
                 <a
@@ -534,37 +857,58 @@ export default function Page() {
                   LinkedIn
                 </a>
               </div>
-
-              <div className="mt-5 text-sm text-slate-700">
-                Tip: When you deploy publicly (e.g., Vercel), these links remain the same and your PDFs in <span className="font-bold">/public</span> will download for recruiters.
-              </div>
             </GradientCard>
           </Section>
         </div>
-
-        {/* Activities (moved to end; bullet points only) */}
-        <div className="mt-14">
-          <Section id="activities" title="Activities" subtitle="Outside of work, I stay active and engaged through sports, outdoors, and cooking.">
-            <GradientCard glow="fuchsia">
-              <ul className="space-y-2 text-sm leading-6 text-slate-700">
-                {activitiesBullets.map((a) => (
-                  <li key={a} className="flex gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900" aria-hidden="true" />
-                    <span>{a}</span>
-                  </li>
-                ))}
-              </ul>
-            </GradientCard>
-          </Section>
-        </div>
-
+{/* Activities & Interests */}
+<div className="mt-14">
+  <Section
+    id="activities"
+    title="Activities & Interests"
+    subtitle="Outside of work, I stay active and engaged through competitive sports, outdoor activities, and cooking."
+  >
+    <GradientCard glow="amber">
+      <ul className="space-y-3 text-sm leading-6 text-slate-700">
+        <li>
+          <span className="font-semibold">Table Tennis:</span> Early Intermediate (USATT 1200+); multi-medalist at the Kansas State Games
+          (2 Gold, 1 Bronze; 2024–2025).
+        </li>
+        <li>
+          <span className="font-semibold">Pickleball:</span> Advanced Amateur (DUPR 4.0).
+        </li>
+        <li>
+          <span className="font-semibold">Volleyball:</span> Competitive (Rating A); regular competitor in USAV-sanctioned leagues and
+          tournaments.
+        </li>
+        <li>
+          <span className="font-semibold">Javelin Throw:</span> Gold Medalist, 2024 Kansas State Games.
+        </li>
+        <li>
+          <span className="font-semibold">Skiing:</span> Intermediate; proficient on green terrain with strong control.
+        </li>
+        <li>
+  <span className="font-semibold">Outdoor Activities:</span> Avid hiker with family, friends, and independently.
+</li>
+<li>
+  <span className="font-semibold">Culinary Interests:</span> Enthusiast of technical cooking and baking.
+</li>
+      </ul>
+    </GradientCard>
+  </Section>
+</div>
         {/* Contact */}
         <div className="mt-14">
-          <Section id="contact" title="Contact" subtitle="For roles, collaborations, consulting discussions, or speaking engagements.">
+          <Section
+            id="contact"
+            title="Contact"
+            subtitle="For roles, collaborations, consulting discussions, or speaking engagements."
+          >
             <GradientCard glow="indigo">
               <div className="grid gap-6 md:grid-cols-3">
                 <div className="md:col-span-2">
-                  <p className="text-sm leading-7 text-slate-700">The fastest way to reach me is by email. I respond with availability and next steps promptly.</p>
+                  <p className="text-sm leading-7 text-slate-700">
+                    The fastest way to reach me is by email. I respond with availability and next steps promptly.
+                  </p>
                   <div className="mt-5 flex flex-wrap gap-3">
                     <a
                       href={`mailto:${profile.email}?subject=${encodeURIComponent("Website inquiry")}`}
@@ -593,9 +937,6 @@ export default function Page() {
                       </a>
                     </div>
                     <div>
-                      <span className="text-white/70">Phone:</span> {profile.phone}
-                    </div>
-                    <div>
                       <span className="text-white/70">Location:</span> {profile.location}
                     </div>
                   </div>
@@ -607,25 +948,11 @@ export default function Page() {
 
         <footer className="mt-16 border-t border-slate-200 py-8 text-sm text-slate-600">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div className="font-semibold">
-              © {new Date().getFullYear()} {profile.name}. All rights reserved.
-            </div>
-            <div className="flex flex-wrap gap-4">
-              <a className="font-semibold hover:text-slate-900" href="#about">
-                About
-              </a>
-              <a className="font-semibold hover:text-slate-900" href="#experience">
-                Experience
-              </a>
-              <a className="font-semibold hover:text-slate-900" href="#languages">
-                Languages
-              </a>
-              <a className="font-semibold hover:text-slate-900" href="#activities">
-                Activities
-              </a>
-              <a className="font-semibold hover:text-slate-900" href="#contact">
-                Contact
-              </a>
+            <div className="font-semibold">© {new Date().getFullYear()} {profile.name}. All rights reserved.</div>
+            <div className="flex gap-4">
+              <a className="font-semibold hover:text-slate-900" href="#about">About</a>
+              <a className="font-semibold hover:text-slate-900" href="#experience">Experience</a>
+              <a className="font-semibold hover:text-slate-900" href="#contact">Contact</a>
             </div>
           </div>
         </footer>
@@ -633,3 +960,5 @@ export default function Page() {
     </div>
   );
 }
+
+
